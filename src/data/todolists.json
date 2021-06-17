@@ -1,0 +1,82 @@
+[
+	{
+		"task": "Give dog a bath",
+		"complete": true
+	},
+	{
+		"task": "Do laundry",
+		"complete": true
+	},
+	{
+		"task": "Vacuum floor",
+		"complete": false
+	},
+	{
+		"task": "Feed cat",
+		"complete": true
+	},
+	{
+		"task": "Change light bulbs",
+		"complete": false
+	},
+	{
+		"task": "Go to Store",
+		"complete": true
+	},
+	{
+		"task": "Fill gas tank",
+		"complete": true
+	},
+	{
+		"task": "Change linens",
+		"complete": false
+	},
+	{
+		"task": "Rake leaves",
+		"complete": true
+	},
+	{
+		"task": "Bake Cookies",
+		"complete": false
+	},
+	{
+		"task": "Take nap",
+		"complete": true
+	},
+	{
+		"task": "Read book",
+		"complete": true
+	},
+	{
+		"task": "Exercise",
+		"complete": false
+	},
+	{
+		"task": "Give dog a bath",
+		"complete": false
+	},
+	{
+		"task": "Do laundry",
+		"complete": false
+	},
+	{
+		"task": "Vacuum floor",
+		"complete": false
+	},
+	{
+		"task": "Feed cat",
+		"complete": true
+	},
+	{
+		"task": "Change light bulbs",
+		"complete": false
+	},
+	{
+		"task": "Go to Store",
+		"complete": false
+	},
+	{
+		"task": "Fill gas tank",
+		"complete": false
+	}
+]
