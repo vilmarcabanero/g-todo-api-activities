@@ -4,6 +4,7 @@ import env from "dotenv";
 import cors from "cors";
 
 import todolistRoutes from "./routes/todolist.js";
+import authRoutes from "./routes/auth.js";
 
 const app = express();
 env.config();
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/todolist", todolistRoutes);
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 4000;
 
