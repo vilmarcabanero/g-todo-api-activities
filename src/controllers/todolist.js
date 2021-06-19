@@ -24,6 +24,18 @@ export const getActiveTodolist = (req, res) => {
 	}
 };
 
+export const getTodo = async (req, res) => {
+	try {
+		const todo = await Todolist.findById(req.params.id);
+
+		// console.log(todo._id)
+		res.send(todo);
+	} catch (err) {
+		console.log(err);
+		res.status(404).send('Todo not found.');
+	}
+};
+
 export const createTodo = (req, res) => {
 	try {
 		const newTodo = new Todolist({
@@ -75,5 +87,31 @@ export const archiveCompleteTodolist = (req, res) => {
 			.catch(err => res.send(err.message));
 	} catch (err) {
 		console.log(err);
+	}
+};
+
+export const updateTodo = async (req, res) => {
+	try {
+		const todo = await Todolist.findByIdAndUpdate(
+			req.params.id,
+			{
+				task: req.body.task,
+			},
+			{ new: true }
+		);
+		// console.log(todo);
+		res.send(todo);
+	} catch (err) {
+		console.log(err);
+		res.status(400).send(err.message);
+	}
+};
+
+export const deleteTodo = async (req, res) => {
+	try {
+		await Todolist.findByIdAndDelete(req.params.id);
+	} catch (err) {
+		console.log(err);
+		res.send(err.message);
 	}
 };

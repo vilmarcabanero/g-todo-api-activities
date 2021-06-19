@@ -14,6 +14,7 @@ const TodolistSchema = new mongoose.Schema(
 			type: Boolean,
 			default: true,
 		},
+		userId: String,
 	},
 	{
 		timestamps: true,

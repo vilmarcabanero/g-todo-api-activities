@@ -14,12 +14,14 @@ export const register = async (req, res) => {
 
 		if (user) {
 			return res.status(400).send({
+				isSuccessful: false,
 				message: `${email} is already registered.`,
 			});
 		}
 
 		if (password !== confirmPassword) {
 			return res.status(400).send({
+				isSuccessful: false,
 				message: `Passwords do not match.`,
 			});
 		}
@@ -43,6 +45,7 @@ export const register = async (req, res) => {
 		await newUser.save();
 
 		return res.send({
+			isSuccessful: true,
 			message: 'User created successfully.',
 			user: _newUser,
 		});
@@ -60,6 +63,7 @@ export const login = async (req, res) => {
 
 		if (!user) {
 			return res.status(400).send({
+				isSuccessful: false,
 				message: `${userByEmail.email} is not yet registered.`,
 			});
 		}
@@ -73,11 +77,14 @@ export const login = async (req, res) => {
 			const token = auth.createAccessToken(user);
 
 			return res.send({
+				isSuccessful: true,
 				token: token,
 				message: `${user.fullName} was logged in successfully.`,
 			});
 		} else {
-			return res.status(400).send({ message: 'Invalid password' });
+			return res
+				.status(400)
+				.send({ isSuccessful: false, message: 'Invalid password' });
 		}
 	} catch (err) {
 		console.log(err);
