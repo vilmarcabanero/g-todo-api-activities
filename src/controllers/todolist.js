@@ -2,7 +2,7 @@ import Todolist from '../models/Todolist.js';
 
 export const getTodolist = (req, res) => {
 	try {
-		Todolist.find()
+		Todolist.find({ userId: req.user.id })
 			.then(todolists => {
 				res.send(todolists);
 			})
@@ -14,9 +14,23 @@ export const getTodolist = (req, res) => {
 
 export const getActiveTodolist = (req, res) => {
 	try {
-		Todolist.find({ isActive: true })
+		Todolist.find({ userId: req.user.id })
 			.then(todolists => {
-				res.send(todolists);
+				const filtered = todolists.filter(todo => todo.isActive);
+				res.send(filtered);
+			})
+			.catch(err => res.status(404).send(err.message));
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const getCompleteTodolist = (req, res) => {
+	try {
+		Todolist.find({ userId: req.user.id })
+			.then(todolists => {
+				const filtered = todolists.filter(todo => todo.complete);
+				res.send(filtered);
 			})
 			.catch(err => res.status(404).send(err.message));
 	} catch (err) {
@@ -40,6 +54,7 @@ export const createTodo = (req, res) => {
 	try {
 		const newTodo = new Todolist({
 			task: req.body.task,
+			userId: req.user.id,
 		});
 
 		newTodo
@@ -96,6 +111,7 @@ export const updateTodo = async (req, res) => {
 			req.params.id,
 			{
 				task: req.body.task,
+				userId: req.user.id,
 			},
 			{ new: true }
 		);

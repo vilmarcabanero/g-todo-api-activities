@@ -14,14 +14,14 @@ export const register = async (req, res) => {
 
 		if (user) {
 			return res.status(400).send({
-				isSuccessful: false,
+				success: false,
 				message: `${email} is already registered.`,
 			});
 		}
 
 		if (password !== confirmPassword) {
-			return res.status(400).send({
-				isSuccessful: false,
+			return res.send({
+				success: false,
 				message: `Passwords do not match.`,
 			});
 		}
@@ -44,14 +44,17 @@ export const register = async (req, res) => {
 
 		await newUser.save();
 
+		const token = auth.createAccessToken(newUser);
+
 		return res.send({
-			isSuccessful: true,
+			success: true,
 			message: 'User created successfully.',
+			token: token,
 			user: _newUser,
 		});
 	} catch (err) {
 		console.log(err);
-		res.status(400).send(err.message);
+		res.status(400).send(err);
 	}
 };
 
@@ -62,8 +65,8 @@ export const login = async (req, res) => {
 		const user = await User.findOne(userByEmail);
 
 		if (!user) {
-			return res.status(400).send({
-				isSuccessful: false,
+			return res.send({
+				success: false,
 				message: `${userByEmail.email} is not yet registered.`,
 			});
 		}
@@ -77,14 +80,12 @@ export const login = async (req, res) => {
 			const token = auth.createAccessToken(user);
 
 			return res.send({
-				isSuccessful: true,
+				success: true,
 				token: token,
 				message: `${user.fullName} was logged in successfully.`,
 			});
 		} else {
-			return res
-				.status(400)
-				.send({ isSuccessful: false, message: 'Invalid password' });
+			return res.send({ success: false, message: 'Invalid password' });
 		}
 	} catch (err) {
 		console.log(err);
