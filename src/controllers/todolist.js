@@ -92,7 +92,10 @@ export const makeIncomplete = (req, res) => {
 
 export const archiveCompleteTodolist = (req, res) => {
 	try {
-		Todolist.updateMany({ complete: true }, { $set: { isActive: false } })
+		Todolist.updateMany(
+			{ userId: req.user.id, complete: true },
+			{ $set: { isActive: false } }
+		)
 			.then(response => {
 				res.send({
 					message: 'Successfully archived complete todolist.',
