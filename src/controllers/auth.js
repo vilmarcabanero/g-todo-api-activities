@@ -13,16 +13,9 @@ export const register = async (req, res) => {
 		const user = await User.findOne({ email: email });
 
 		if (user) {
-			return res.status(400).send({
-				success: false,
-				message: `${email} is already registered.`,
-			});
-		}
-
-		if (password !== confirmPassword) {
 			return res.send({
-				success: false,
-				message: `Passwords do not match.`,
+				status: "error",
+				message: `${email} is already registered.`,
 			});
 		}
 
@@ -47,7 +40,7 @@ export const register = async (req, res) => {
 		const token = auth.createAccessToken(newUser);
 
 		return res.send({
-			success: true,
+			status: "ok",
 			message: 'User created successfully.',
 			token: token,
 			user: _newUser,
@@ -66,7 +59,7 @@ export const login = async (req, res) => {
 
 		if (!user) {
 			return res.send({
-				success: false,
+				status: "error",
 				message: `${userByEmail.email} is not yet registered.`,
 			});
 		}
@@ -80,12 +73,11 @@ export const login = async (req, res) => {
 			const token = auth.createAccessToken(user);
 
 			return res.send({
-				success: true,
+				status: "ok",
 				token: token,
-				message: `${user.fullName} was logged in successfully.`,
 			});
 		} else {
-			return res.send({ success: false, message: 'Invalid password' });
+			return res.send({ status: "error", message: 'Invalid password' });
 		}
 	} catch (err) {
 		console.log(err);
@@ -181,7 +173,7 @@ export const forgotPassword = async (req, res) => {
 			});
 
 			return res.send({
-				success: true,
+				status: "ok",
 				message: `Hello ${user.firstName}, please check your email to reset your password.`,
 			});
 			// return res.send({
@@ -229,7 +221,7 @@ export const resetPassword = async (req, res) => {
 
 		await user.save();
 		return res.send({
-			success: true,
+			status: "ok",
 			message: `Hello ${user.firstName}, you've successfully reset your password.`,
 		});
 	} catch (err) {

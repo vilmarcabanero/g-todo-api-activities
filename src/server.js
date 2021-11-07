@@ -13,9 +13,9 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/todos', todolistRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes);
+app.use('/todos', todolistRoutes);
+app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
 
 const PORT = process.env.PORT || 4000;
 
